@@ -1,4 +1,4 @@
-import { Component } from "react";
+
 import alien from "../../assets/alien.png";
 
 const longestName = (name) => {
