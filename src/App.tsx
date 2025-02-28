@@ -1,24 +1,34 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import CardList from "./components/card-list/card-list.component";
 import SearchBox from "./components/search-box/search-box.component";
 
+import { getData } from "./utils/data.utils";
+
+export type Character = {
+  id: React.Key;
+  name: string;
+  image: string;
+  status: string;
+  species: string;
+}
+
+export type Result = {
+  results: Character[]
+}
+
+
 const App = () => {
   const [searchField, setSearchField] = useState("");
-  const [characters, setCharacters] = useState([]);
+  const [characters, setCharacters] = useState<Character[]>([]);
   const [filterCharacters, setFilterCharacters] = useState(characters);
 
-  const onSearchChange = (event) => {
-    const searchFieldString = event.target.value.toLocaleLowerCase();
-    setSearchField(searchFieldString);
-  };
-
-  console.log("rendered");
-
   useEffect(() => {
-    fetch("https://rickandmortyapi.com/api/character")
-      .then((response) => response.json())
-      .then((response) => setCharacters(response.results));
+    const fetchUser = async () =>{
+      const responseCharacters = await getData<Result>("https://rickandmortyapi.com/api/character")
+      setCharacters(responseCharacters.results)
+    }
+    fetchUser();
   }, []);
 
   useEffect(() => {
@@ -27,6 +37,11 @@ const App = () => {
     });
     setFilterCharacters(newFilterCharacters);
   }, [characters, searchField]);
+
+  const onSearchChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const searchFieldString = event.target.value.toLocaleLowerCase();
+    setSearchField(searchFieldString);
+  };
 
   return (
     <div className="bg-zinc-800">

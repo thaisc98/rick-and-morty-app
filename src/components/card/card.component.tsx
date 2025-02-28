@@ -1,16 +1,23 @@
 
+import { Character } from "../../App";
+
 import alien from "../../assets/alien.png";
 
-const longestName = (name) => {
-  return name.length >= 10 ? name.slice(0, 16) : name;
+const longestName = (name: string) => {
+  return name.length >= 9 ? name.slice(0, 16) : name;
 };
 
-const Card = ({ character }) => {
+type CardProps ={
+  character: Character;
+}
+
+const Card = ({ character }: CardProps) => {
   const { id, name, image, status, species } = character;
+  console.log(name);
   return (
     <div
       key={id}
-      className="rounded-lg  mx-6 my-6 relative justify-between hover:bg-gradient-to-r hover:from-green-500 hover:via-yellow-400 hover:to-green-900 hover:shadow-lg  hover:shadow-zinc-900"
+      className="rounded-lg  mx-4 my-4 relative justify-between hover:bg-gradient-to-r hover:from-green-500 hover:via-yellow-400 hover:to-green-900 hover:shadow-lg  hover:shadow-zinc-900"
     >
       <div className="rounded bg-zinc-900 p-2 transition ease-out duration-200  hover:scale-95">
         <img
@@ -19,7 +26,7 @@ const Card = ({ character }) => {
           src={image}
         />
         <div className="flex flex-wrap items-center align-middle justify-center mx-2 my-2">
-          <h2 className="text-lg font-bold">{longestName(name)}</h2>
+          <h2 className="text-ms font-bold text-wrap">{longestName(name)}</h2>
           {species === "Human" ? (
             <div className="mx-2">
               <svg
@@ -38,7 +45,7 @@ const Card = ({ character }) => {
             </div>
           ) : (
             <div className="mx-2">
-              <img className="w-6 h-6" src={alien} alt="alien" />
+              <img className="w-5 h-5" src={alien} alt="alien" />
             </div>
           )}
         </div>
