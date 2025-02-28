@@ -13,7 +13,7 @@ type CardProps ={
 
 const Card = ({ character }: CardProps) => {
   const { id, name, image, status, species } = character;
-  console.log(name);
+
   return (
     <div
       key={id}

@@ -25,11 +25,14 @@ const App = () => {
 
   useEffect(() => {
     const fetchUser = async () =>{
-      const responseCharacters = await getData<Result>("https://rickandmortyapi.com/api/character")
+      const url = searchField.length > 3
+      ? `https://rickandmortyapi.com/api/character/?name=${searchField}`
+      : "https://rickandmortyapi.com/api/character/"; // Default URL without search
+      const responseCharacters = await getData<Result>(url)
       setCharacters(responseCharacters.results)
     }
     fetchUser();
-  }, []);
+  }, [searchField]);
 
   useEffect(() => {
     const newFilterCharacters = characters.filter((character) => {
